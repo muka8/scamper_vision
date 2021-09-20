@@ -39,7 +39,7 @@ void CameraViewerNl::onInit()
 	//ノードハンドラの初期化
 	nh_ = this->getNodeHandle();
 	//Subscirberの初期化
-	sub_img_ = nh_.subscribe("image", 10, &CameraViewerNl::onImgSubscribed, this);
+	sub_img_ = nh_.subscribe("Image", 10, &CameraViewerNl::onImgSubscribed, this);
 }
 
 //画像を受信すると呼ばれるコールバック関数
