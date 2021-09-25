@@ -1,5 +1,5 @@
 <library path="lib/libscamper_vision">
-  <class name="scamper_vision/CameraPublisherNl" type="scamper__vision::CameraPublisherNl" base_class_type="nodelet::Nodelet">
+  <class name="scamper_vision/CameraPublisherNl" type="scamper_vision::CameraPublisherNl" base_class_type="nodelet::Nodelet">
   <description>
      This module is Camera publisher
      </description>
@@ -11,3 +11,5 @@
      <description>
    </class>
 </library>
+
+
