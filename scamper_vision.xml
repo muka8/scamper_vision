@@ -5,7 +5,7 @@
      </description>
    </class>
 
-   <class name="scamper_vision/CAmeraViewerNl" type="scamper_vision::CameraViewerNl" base_class_type="nodelet::Nodelet">
+   <class name="scamper_vision/CameraViewerNl" type="scamper_vision::CameraViewerNl" base_class_type="nodelet::Nodelet">
      <description>
        This module is image viewer
      <description>
