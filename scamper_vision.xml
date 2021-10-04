@@ -1,15 +1,23 @@
 <library path="lib/libscamper_vision">
   <class name="scamper_vision/CameraPublisherNl" type="scamper_vision::CameraPublisherNl" base_class_type="nodelet::Nodelet">
-  <description>
+    <description>
      This module is Camera publisher
+    </description>
+  </class>
+
+  <class name="scamper_vision/CameraViewerNl" type="scamper_vision::CameraViewerNl" base_class_type="nodelet::Nodelet">
+    <description>
+      This module is image viewer
+     </description>
+   </class>
+  
+   <class="scamper_vision/ExtractColor" type="scamper_vision::ExtractColor" base_class_type="nodelet::Nodelet">
+     <description>
+       This module is color extractor
      </description>
    </class>
 
-   <class name="scamper_vision/CameraViewerNl" type="scamper_vision::CameraViewerNl" base_class_type="nodelet::Nodelet">
-     <description>
-       This module is image viewer
-     <description>
-   </class>
 </library>
+
 
 

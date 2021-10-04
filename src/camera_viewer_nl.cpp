@@ -49,7 +49,7 @@ void CameraViewerNl::onImgSubscribed(const ImageConstPtr &img)
 	CvImageConstPtr cv_img = toCvShare(img, img->encoding);
 	if(cv_img->image.empty()) return;
 	//画像の表示
-	cv::imshow("image", cv_img->image);
+	cv::imshow("Image", cv_img->image);
 	cv::waitKey(10);
 }
 

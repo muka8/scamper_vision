@@ -34,5 +34,6 @@ set(TARGET "scamper_vision")
 add_library(${TARGET}
 		src/camera_publisher_nl.cpp
 		src/camera_viewer_nl.cpp
+		src/extract_color.cpp
 )
 target_link_libraries(${TARGET} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})

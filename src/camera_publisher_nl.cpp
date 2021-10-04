@@ -50,7 +50,7 @@ void CameraPublisherNl::onInit()
 	}
 	//Publisherの登録
 	pub_img_ = nh_.advertise<sensor_msgs::Image>("Image", 10);
-	//33msecごににTime割り込み
+	//33msec毎にTime割り込み
 	timer_ = nh_.createTimer(ros::Duration(0.033), &CameraPublisherNl::onTimerElapsed, this);
 }
 
