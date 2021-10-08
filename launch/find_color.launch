@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<launch>
+  <node pkg="nodelet" type="nodelet" name="camera_publisher"
+  args="load scamper_vision/CameraPublisherNl manageer" output="screen" />
+
+  <node pkg="nodelet" type="nodelet" name="find_color"
+  args="load scamper_vision/FindColor manager" output="screen" />
+
+  <node pkg="nodelet" type="nodelet" name="manager" args="manager" output="screen" />
+
+  <param name="hue/min" value="50" type="int" />
+  <param name="hue/max" value="65" type="int" />
+  <param name="sat/min" value="100" type="int" />
+  <param name="sat/max" value="255" type="int" />
+  <param name="val/min" value="50" type="int" />
+  <param name="val/max" value="255" type="int" />
+  <param name="size/min" value="300" type="int" />
+  <param name="dead/zone" value="50" type="int" />
+  <param name="vel/max" value="50" type="int" />
+</launch>

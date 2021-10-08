@@ -5,6 +5,7 @@ set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
 find_package(catkin REQUIRED COMPONENTS
   cv_bridge
   roscpp
+  geometry_msgs
   sensor_msgs
   nodelet
 )
@@ -35,5 +36,6 @@ add_library(${TARGET}
 		src/camera_publisher_nl.cpp
 		src/camera_viewer_nl.cpp
 		src/extract_color.cpp
+		src/find_color.cpp
 )
 target_link_libraries(${TARGET} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})

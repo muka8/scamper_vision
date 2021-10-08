@@ -17,6 +17,12 @@
      </description>
    </class>
 
+   <class name="scamper_vision/FindColor" type="scamper_vision::FindColor" base_class_type="nodelet::Nodelet">
+     <description>
+       find color module
+     </description>
+   </class>
+
 </library>
 
 
