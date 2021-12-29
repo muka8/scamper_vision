@@ -2,67 +2,13 @@
 #include <sensor_msgs/Image.h>
 #include <cv_bridge/cv_bridge.h>
 #include <geometry_msgs/Twist.h>
-#include <nodelet/nodelet.h>
-#include <pluginlib/class_list_macros.h>
 #include <opencv2/opencv.hpp>
 
 using namespace sensor_msgs;
 using namespace geometry_msgs;
 using namespace cv_bridge;
 
-namespace scamper_vision
-{
-
-class FindColor : public nodelet::Nodelet
-{
-public:
-	FindColor();
-	~FindColor();
-	virtual void onInit();
-private:
-	void extractColor(const cv::Mat &src, cv::Mat &dst);
-	void onImgSubscribed(const ImageConstPtr &img);
-	ros::NodeHandle nh_;
-	ros::Subscriber sub_img_;
-	ros::Publisher pub_vel_;
-	int hue_min_, hue_max_, sat_min_, sat_max_, val_min_, val_max_;
-	int sz_min_, dead_zone_;
-	double vel_max_;
-};
-
-FindColor::FindColor()
-{
-
-}
-
-FindColor::~FindColor()
-{
-
-}
-
-//モジュールが読み込まれると自動的に呼び出されると自動的に呼び出される関数
-void FindColor::onInit()
-{
-	//ノードハンドラの初期化
-	nh_ = this->getNodeHandle();
-	//Parameterの読み込み
-	hue_min_ = nh_.param<int>("hue/min", 50);
-	hue_max_ = nh_.param<int>("hue/max", 65);
-        sat_min_ = nh_.param<int>("sat/min", 100);
-        sat_max_ = nh_.param<int>("sat/max", 255);
-        val_min_ = nh_.param<int>("val/min", 50);
-        val_max_ = nh_.param<int>("val/max", 255);
-        sz_min_ = nh_.param<int>("size/min", 100);
-	dead_zone_ = nh_.param<int>("dead_zone", 50);
-	vel_max_ = nh_.param<double>("vel/max", 50.0);
-	vel_max_ *=(M_PI / 180.0);
-	//Subscriberの初期化
-	sub_img_ = nh_.subscribe("image", 10, &FindColor::onImgSubscribed, this);
-	//Publisherの初期化
-	pub_vel_=nh_.advertise<Twist>("/scamper_driver/cmd_robot_vel", 10);
-}
-
-void FindColor::extractColor(const cv::Mat &src, cv::Mat &dst)
+void extractColor(const cv::Mat &src, cv::Mat &dst)
 {
 	//srcをHSV表色系に変換
 	cv::Mat hsv;
@@ -86,11 +32,10 @@ void FindColor::extractColor(const cv::Mat &src, cv::Mat &dst)
 }
 
 //画像を受信すると呼ばれるコールバック関数
-void FindColor::onImgSubscribed(const ImageConstPtr &img)
+void onImgSubscribed(const Image &img)
 {
 	//信信した画像を変換
-	CvImageConstPtr cv_img = toCvShare(img, img->encoding);
-	if(cv_img->image.empty()) return;
+	CvImagePtr cv_img = toCvShare(img, img->encoding);
 	//目標速度の変数を宣言
 	Twist target_vel;
 	//画像から特定の色を抽出
@@ -122,8 +67,32 @@ void FindColor::onImgSubscribed(const ImageConstPtr &img)
 
 }
 
-PLUGINLIB_EXPORT_CLASS(scamper_vision::FindColor, nodelet::Nodelet)
-
+int main(int argc, char **argv)
+{
+	//ROS initalize
+	ros::init(argc, argv, "find_color");
+        ros::NodeHandle nh;
+//モジュールが読み込まれると自動的に呼び出されると自動的に呼び出される
+	//void FindColor::onInit()
+	
+	//Parameterの読み込み
+	hue_min_ = nh_.param<int>("hue/min", 50);
+	hue_max_ = nh_.param<int>("hue/max", 65);
+        sat_min_ = nh_.param<int>("sat/min", 100);
+        sat_max_ = nh_.param<int>("sat/max", 255);
+        val_min_ = nh_.param<int>("val/min", 50);
+        val_max_ = nh_.param<int>("val/max", 255);
+        sz_min_ = nh_.param<int>("size/min", 100);
+	dead_zone_ = nh_.param<int>("dead_zone", 50);
+	vel_max_ = nh_.param<double>("vel/max", 50.0);
+	vel_max_ *=(M_PI / 180.0);
+	//Subscriberの初期化
+	ros::Subscriber sub_img_ = nh_.subscribe("image", 10, onImgSubscribed);
+	//ros::Subscriber sub_keyop_ = nh_.subscribe("keyop", 10, onImgSubscribed);
+	//Publisherの初期化
+	ros::Publisher pub_vel_ = nh_.advertise<Twist>("/mobile_base/commands/velocity", 10);
+	return 0;
+}
 
 
 
